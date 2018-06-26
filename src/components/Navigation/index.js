@@ -2,9 +2,10 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import { compose } from 'recompose';
-
-import SignOutButton from '../SignOut';
 import * as routes from '../../constants/routes';
+import { Input, Menu, Segment } from 'semantic-ui-react';
+import { auth } from '../../firebase';
+
 
 const Navigation = ({ sessionStore }) =>
   <div>
@@ -14,19 +15,25 @@ const Navigation = ({ sessionStore }) =>
     }
   </div>
 
-const NavigationAuth = () =>
-  <ul>
-    <li><Link to={routes.LANDING}>Landing</Link></li>
-    <li><Link to={routes.HOME}>Home</Link></li>
-    <li><Link to={routes.ACCOUNT}>Account</Link></li>
-    <li><SignOutButton /></li>
-  </ul>
+const NavigationAuth = () => (
+  <div>
+    <Menu pointing>
+      <Menu.Item name='Landing' as={Link} to={routes.LANDING}/>
+      <Menu.Item name='Home' as={Link} to={routes.HOME}/>
+      <Menu.Item name='Account' as={Link} to={routes.ACCOUNT}/>
+      <Menu.Item name='Sign Out' onClick={auth.doSignOut}/>
+    </Menu>
+    
+  </div>)
 
-const NavigationNonAuth = () =>
-  <ul>
-    <li><Link to={routes.LANDING}>Landing</Link></li>
-    <li><Link to={routes.SIGN_IN}>Sign In</Link></li>
-  </ul>
+const NavigationNonAuth = () => (
+  <div>
+      <Menu pointing>
+        <Menu.Item name='home' as={Link} to={routes.LANDING} />
+        <Menu.Item name='Sign In' as={Link} to={routes.SIGN_IN} />
+      </Menu>
+  </div>
+)
 
 export default compose(
   inject('sessionStore'),

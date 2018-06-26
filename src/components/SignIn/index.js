@@ -5,14 +5,17 @@ import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
+import { Input, Button, Segment } from 'semantic-ui-react';
+import '../../styles/app.css'
 
 const SignInPage = ({ history }) =>
-  <div>
-    <h1>SignIn</h1>
-    <SignInForm history={history} />
-    <PasswordForgetLink />
-    <SignUpLink />
-  </div>
+    <Segment padded compact >
+      <h1>Sign In</h1>
+      <SignInForm history={history} />
+      <PasswordForgetLink />
+      <SignUpLink />
+    </Segment>
+
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -66,23 +69,23 @@ class SignInForm extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
+        <Input
           value={email}
           onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
-          type="text"
+          // type="text"
           placeholder="Email Address"
         />
-        <input
+        <br/> 
+        <Input
           value={password}
           onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
           type="password"
           placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
+        <br/>
+        <Button disabled={isInvalid} type="submit"> Sign In </Button>
 
-        { error && <p>{error.message}</p> }
+        {error && <p>{error.message}</p>}
       </form>
     );
   }
